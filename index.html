@@ -3,15 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ny fitiavako anao</title>
+    <title>Ny Fitiavako anao</title>
     <style>
-        /* Appliquer une bordure au canevas */
-        
+       body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+h1 {
+  font-size: 36px;
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container::before,
+.container::after {
+  content: "\2665";
+  font-size: 36px;
+  position: absolute;
+  color: red;
+}
+
+.container::before {
+  top: 0;
+  left: -40px;
+}
+
+.container::after {
+  bottom: 0;
+  right: -40px;
+}
+
     </style>
-    
 </head>
 <body>
-    
-   <h1>JE t'AIME MARIA</h1>
+    <div class="container">
+        <h1>JE T'AIME MARIA</h1>
+      </div>
 </body>
 </html>
