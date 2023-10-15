@@ -41,12 +41,18 @@
             margin-bottom: 10px;
             font-weight: bold;
         }
+
+        /* Masquer le formulaire et la liste sur les écrans de taille inférieure à 600px (ajustez la valeur en fonction de vos besoins) */
+        @media screen and (max-width: 600px) {
+            form, ul {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Le formulaire avec le titre, l'input et le bouton -->
     <form id="form">
-      
         <input id="input" type="text" placeholder="INONA FILAMBANINY ANDROANY?" required>
         <button id="button" type="submit">Valider</button>
     </form>
@@ -56,64 +62,70 @@
 
     <!-- Le script Javascript qui gère la logique du formulaire -->
     <script>
-        // Récupérer les éléments du DOM
-        var form = document.getElementById("form");
-        var input = document.getElementById("input");
-        var button = document.getElementById("button");
-        var list = document.getElementById("list");
+        // Vérifier si l'utilisateur accède à partir d'un téléphone
+        if (window.innerWidth <= 600) {
+            // Récupérer les éléments du DOM
+            var form = document.getElementById("form");
+            var input = document.getElementById("input");
+            var button = document.getElementById("button");
+            var list = document.getElementById("list");
 
-        // Créer un tableau vide pour stocker les inputs
-        var inputs = [];
+            // Créer un tableau vide pour stocker les inputs
+            var inputs = [];
 
-        // Vérifier si le LocalStorage contient déjà des inputs
-        if (localStorage.getItem("inputs")) {
-            // Récupérer les inputs du LocalStorage et les convertir en tableau
-            inputs = JSON.parse(localStorage.getItem("inputs"));
-
-            // Afficher les inputs dans la liste
-            displayInputs();
-        }
-
-        // Ajouter un écouteur d'événement sur le formulaire
-        form.addEventListener("submit", function(event) {
-            // Empêcher le comportement par défaut du formulaire
-            event.preventDefault();
-
-            // Récupérer la valeur de l'input
-            var value = input.value;
-
-            // Vérifier si la valeur n'est pas vide
-            if (value) {
-                // Ajouter la valeur au tableau des inputs
-                inputs.push(value);
-
-                // Sauvegarder le tableau des inputs dans le LocalStorage
-                localStorage.setItem("inputs", JSON.stringify(inputs));
+            // Vérifier si le LocalStorage contient déjà des inputs
+            if (localStorage.getItem("inputs")) {
+                // Récupérer les inputs du LocalStorage et les convertir en tableau
+                inputs = JSON.parse(localStorage.getItem("inputs"));
 
                 // Afficher les inputs dans la liste
                 displayInputs();
-
-                // Vider l'input
-                input.value = "";
             }
-        });
 
-        // Une fonction qui affiche les inputs dans la liste
-        function displayInputs() {
-            // Vider la liste
-            list.innerHTML = "";
+            // Ajouter un écouteur d'événement sur le formulaire
+            form.addEventListener("submit", function(event) {
+                // Empêcher le comportement par défaut du formulaire
+                event.preventDefault();
 
-            // Parcourir le tableau des inputs
-            for (var i = 0; i < inputs.length; i++) {
-                // Créer un élément li pour chaque input
-                var li = document.createElement("li");
+                // Récupérer la valeur de l'input
+                var value = input.value;
 
-                // Ajouter le numéro et la valeur de l'input au li
-                li.textContent = (i + 1) + "- " + inputs[i];
+                // Vérifier si la valeur n'est pas vide
+                if (value) {
+                    // Ajouter la valeur au tableau des inputs
+                    inputs.push(value);
 
-                // Ajouter le li à la liste
-                list.appendChild(li);
+                    // Sauvegarder le tableau des inputs dans le LocalStorage
+                    localStorage.setItem("inputs", JSON.stringify(inputs));
+
+                    // Afficher les inputs dans la liste
+                    displayInputs();
+
+                    // Vider l'input
+                    input.value = "";
+                }
+            });
+
+            // Une fonction qui affiche les inputs dans la liste
+            function displayInputs() {
+                // Vider la liste
+                list.innerHTML = "";
+
+                // Parcourir le tableau des inputs
+                for (var i = 0; i < inputs.length; i++) {
+                    // Créer un élément li pour chaque input
+                    var li = document.createElement("li");
+
+                    // Ajouter le numéro et la valeur de l'input au li
+                    li.textContent = (i + 1) + "- " + inputs[i];
+
+                    // Ajouter le li à la liste
+                    list.appendChild(li);
+                }
             }
+        } else {
+            // Si l'utilisateur n'est pas sur un téléphone, affiche un message indiquant que le site n'est pas compatible.
+            document.body.innerHTML = "<p>Ce site n'est pas compatible avec les écrans de grande taille.</p>";
         }
     </script>
 </body>
