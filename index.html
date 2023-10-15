@@ -1,129 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ny Fitiavako anao</title>
     <style>
-        /* Style de base pour les éléments */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+       body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
 
-        /* Style du titre */
-        h1 {
-            color: blue;
-            text-align: center;
-        }
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
 
-        /* Style de l'input */
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid black;
-        }
+h1 {
+  font-size: 36px;
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-        /* Style du bouton */
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: green;
-            color: white;
-            border: none;
-        }
+.container::before,
+.container::after {
+  content: "\2665";
+  font-size: 36px;
+  position: absolute;
+  color: red;
+}
 
-        /* Style de la liste des inputs */
-        ul {
-            margin-top: 20px;
-            list-style-type: none;
-        }
+.container::before {
+  top: 0;
+  left: -40px;
+}
 
-        /* Style de chaque élément de la liste */
-        li {
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
+.container::after {
+  bottom: 0;
+  right: -40px;
+}
 
-        /* Media query pour ajuster le style sur les écrans plus petits */
-        @media screen and (max-width: 1200px) {
-            /* Réduire la largeur de l'input et du bouton */
-            input, button {
-                width: 80%;
-            }
-        }
     </style>
 </head>
 <body>
-   
-    <!-- Le formulaire avec l'input et le bouton -->
-    <form id="form">
-        <input id="input" type="text" placeholder="INONA FILAMBANINY ANDROANY?" required>
-        <button id="button" type="submit">Valider</button>
-    </form>
-
-    <!-- La liste des inputs sauvegardés dans le LocalStorage -->
-    <ul id="list"></ul>
-
-    <!-- Le script JavaScript qui gère la logique du formulaire -->
-    <script>
-        // Récupérer les éléments du DOM
-        var form = document.getElementById("form");
-        var input = document.getElementById("input");
-        var button = document.getElementById("button");
-        var list = document.getElementById("list");
-
-        // Créer un tableau vide pour stocker les inputs
-        var inputs = [];
-
-        // Vérifier si le LocalStorage contient déjà des inputs
-        if (localStorage.getItem("inputs")) {
-            // Récupérer les inputs du LocalStorage et les convertir en tableau
-            inputs = JSON.parse(localStorage.getItem("inputs"));
-
-            // Afficher les inputs dans la liste
-            displayInputs();
-        }
-
-        // Ajouter un écouteur d'événement sur le formulaire
-        form.addEventListener("submit", function(event) {
-            // Empêcher le comportement par défaut du formulaire
-            event.preventDefault();
-
-            // Récupérer la valeur de l'input
-            var value = input.value;
-
-            // Vérifier si la valeur n'est pas vide
-            if (value) {
-                // Ajouter la valeur au tableau des inputs
-                inputs.push(value);
-
-                // Sauvegarder le tableau des inputs dans le LocalStorage
-                localStorage.setItem("inputs", JSON.stringify(inputs));
-
-                // Afficher les inputs dans la liste
-                displayInputs();
-
-                // Vider l'input
-                input.value = "";
-            }
-        });
-
-        // Une fonction qui affiche les inputs dans la liste
-        function displayInputs() {
-            // Vider la liste
-            list.innerHTML = "";
-
-            // Parcourir le tableau des inputs
-            for (var i = 0; i < inputs.length; i++) {
-                // Créer un élément li pour chaque input
-                var li = document.createElement("li");
-
-                // Ajouter le numéro et la valeur de l'input au li
-                li.textContent = (i + 1) + "- " + inputs[i];
-
-                // Ajouter le li à la liste
-                list.appendChild(li);
-            }
-        }
-    </script>
+    <div class="container">
+        <h1>JE T'AIME MARIA</h1>
+      </div>
 </body>
 </html>
