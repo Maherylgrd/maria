@@ -2,56 +2,59 @@
 <html>
 <head>
     <style>
-        /* Le style du formulaire */
-        form {
-            margin: 20px;
+        /* Style de base pour les éléments */
+        body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Le style du titre */
+        /* Style du titre */
         h1 {
             color: blue;
             text-align: center;
         }
 
-        /* Le style de l'input */
+        /* Style de l'input */
         input {
-            width: 300px;
+            width: 100%;
             padding: 10px;
             border: 1px solid black;
         }
 
-        /* Le style du bouton */
+        /* Style du bouton */
         button {
-            width: 100px;
+            width: 100%;
             padding: 10px;
             background-color: green;
             color: white;
             border: none;
         }
 
-        /* Le style de la liste des inputs */
+        /* Style de la liste des inputs */
         ul {
             margin-top: 20px;
             list-style-type: none;
         }
 
-        /* Le style de chaque élément de la liste */
+        /* Style de chaque élément de la liste */
         li {
             margin-bottom: 10px;
             font-weight: bold;
         }
 
-        /* Masquer le formulaire et la liste sur les écrans de taille inférieure à 600px (ajustez la valeur en fonction de vos besoins) */
-        @media screen and (max-width: 2000px) {
-            form, ul {
-                display: none;
+        /* Media query pour ajuster le style sur les écrans plus petits */
+        @media screen and (max-width: 600px) {
+            /* Réduire la largeur de l'input et du bouton */
+            input, button {
+                width: 80%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Le formulaire avec le titre, l'input et le bouton -->
+    <h1>Formulaire Responsive</h1>
+    <!-- Le formulaire avec l'input et le bouton -->
     <form id="form">
         <input id="input" type="text" placeholder="INONA FILAMBANINY ANDROANY?" required>
         <button id="button" type="submit">Valider</button>
@@ -60,72 +63,66 @@
     <!-- La liste des inputs sauvegardés dans le LocalStorage -->
     <ul id="list"></ul>
 
-    <!-- Le script Javascript qui gère la logique du formulaire -->
+    <!-- Le script JavaScript qui gère la logique du formulaire -->
     <script>
-        // Vérifier si l'utilisateur accède à partir d'un téléphone
-        if (window.innerWidth <= 1000) {
-            // Récupérer les éléments du DOM
-            var form = document.getElementById("form");
-            var input = document.getElementById("input");
-            var button = document.getElementById("button");
-            var list = document.getElementById("list");
+        // Récupérer les éléments du DOM
+        var form = document.getElementById("form");
+        var input = document.getElementById("input");
+        var button = document.getElementById("button");
+        var list = document.getElementById("list");
 
-            // Créer un tableau vide pour stocker les inputs
-            var inputs = [];
+        // Créer un tableau vide pour stocker les inputs
+        var inputs = [];
 
-            // Vérifier si le LocalStorage contient déjà des inputs
-            if (localStorage.getItem("inputs")) {
-                // Récupérer les inputs du LocalStorage et les convertir en tableau
-                inputs = JSON.parse(localStorage.getItem("inputs"));
+        // Vérifier si le LocalStorage contient déjà des inputs
+        if (localStorage.getItem("inputs")) {
+            // Récupérer les inputs du LocalStorage et les convertir en tableau
+            inputs = JSON.parse(localStorage.getItem("inputs"));
+
+            // Afficher les inputs dans la liste
+            displayInputs();
+        }
+
+        // Ajouter un écouteur d'événement sur le formulaire
+        form.addEventListener("submit", function(event) {
+            // Empêcher le comportement par défaut du formulaire
+            event.preventDefault();
+
+            // Récupérer la valeur de l'input
+            var value = input.value;
+
+            // Vérifier si la valeur n'est pas vide
+            if (value) {
+                // Ajouter la valeur au tableau des inputs
+                inputs.push(value);
+
+                // Sauvegarder le tableau des inputs dans le LocalStorage
+                localStorage.setItem("inputs", JSON.stringify(inputs));
 
                 // Afficher les inputs dans la liste
                 displayInputs();
+
+                // Vider l'input
+                input.value = "";
             }
+        });
 
-            // Ajouter un écouteur d'événement sur le formulaire
-            form.addEventListener("submit", function(event) {
-                // Empêcher le comportement par défaut du formulaire
-                event.preventDefault();
+        // Une fonction qui affiche les inputs dans la liste
+        function displayInputs() {
+            // Vider la liste
+            list.innerHTML = "";
 
-                // Récupérer la valeur de l'input
-                var value = input.value;
+            // Parcourir le tableau des inputs
+            for (var i = 0; i < inputs.length; i++) {
+                // Créer un élément li pour chaque input
+                var li = document.createElement("li");
 
-                // Vérifier si la valeur n'est pas vide
-                if (value) {
-                    // Ajouter la valeur au tableau des inputs
-                    inputs.push(value);
+                // Ajouter le numéro et la valeur de l'input au li
+                li.textContent = (i + 1) + "- " + inputs[i];
 
-                    // Sauvegarder le tableau des inputs dans le LocalStorage
-                    localStorage.setItem("inputs", JSON.stringify(inputs));
-
-                    // Afficher les inputs dans la liste
-                    displayInputs();
-
-                    // Vider l'input
-                    input.value = "";
-                }
-            });
-
-            // Une fonction qui affiche les inputs dans la liste
-            function displayInputs() {
-                // Vider la liste
-                list.innerHTML = "";
-
-                // Parcourir le tableau des inputs
-                for (var i = 0; i < inputs.length; i++) {
-                    // Créer un élément li pour chaque input
-                    var li = document.createElement("li");
-
-                    // Ajouter le numéro et la valeur de l'input au li
-                    li.textContent = (i + 1) + "- " + inputs[i];
-
-                    // Ajouter le li à la liste
-                    list.appendChild(li);
-                }
+                // Ajouter le li à la liste
+                list.appendChild(li);
             }
-        } else {
-            // Si l'utilisateur n'est pas sur un téléphone, affiche un message indiquant que le site n'est pas compatible.
-            document.body.innerHTML = "<p>Ce site n'est pas compatible avec les écrans de grande taille.</p>";
         }
     </script>
 </body>
